@@ -1,8 +1,26 @@
 aid: pixis
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/pixis.png
 name: Pixis
-description: 'Pixis is a company surfaced as a portfolio company of softbank-vision-fund and added to
-  the API Evangelist network as a stub for enrichment. Sector: enterprise. This profile is a lead awaiting
-  the enrichment pipeline.'
+description: 'Pixis is an AI-powered advertising and marketing platform for consumer brands,
+  built on proprietary codeless AI infrastructure that plans, creates, and optimizes digital
+  advertising across channels. Its products include Prism (campaign performance optimization
+  and cross-channel analytics), Adroom (generative AI creative production for ad assets), and
+  Visibility (AI-search presence tracking and optimization). Pixis connects directly to
+  marketing and ad platforms such as Google, Meta, and Salesforce to automate media buying,
+  creative generation, and performance optimization from one place. The company is backed by
+  SoftBank Vision Fund, with engineering operations in India. Pixis does not publish a public
+  developer API or documentation; it is an enterprise, demo-led SaaS platform.'
 url: https://raw.githubusercontent.com/api-evangelist/pixis/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -12,13 +30,37 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-20'
 tags:
 - Company
 - Enterprise
+- Advertising
+- Marketing
+- Artificial Intelligence
+- Generative AI
+- Advertising Technology
+- Marketing Automation
 apis: []
+common:
+- type: Website
+  url: https://pixis.ai/
+- type: Blog
+  url: https://pixis.ai/blog/
+- type: PrivacyPolicy
+  url: https://pixis.ai/privacy-policy/
+- type: GitHubOrganization
+  url: https://github.com/pixisai
+- type: StatusPage
+  url: https://status.pixis.ai/
+- type: DomainSecurity
+  url: security/pixis-domain-security.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+x-enrichment:
+  date: '2026-07-20'
+  status: minimal
+  artifacts_added: 1
+  pass: local-v1
