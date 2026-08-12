@@ -1,0 +1,99 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  Live probes of https://core-performance.pixis.ai/ and https://ws.pixis.ai/ ;
+  https://auth.pixis.ai/.well-known/openid-configuration ;
+  https://prism.pixis.ai/assets/index-Bof3QprB.js
+name: Pixis — cross-cutting API conventions
+description: >-
+  Cross-cutting runtime semantics for the Pixis surface. Pixis publishes no API reference, so
+  nothing here is derived from documentation — every entry is either observed on a live
+  response or read from a Pixis-published discovery document or first-party JavaScript bundle.
+  The unknowns below are unknowable from the public surface, not unchecked.
+
+authentication:
+  style: OAuth 2.0 / OIDC bearer JWT
+  authorization_server: https://auth.pixis.ai/
+  header: 'Authorization: Bearer <JWT>'
+  middleware_observed: express-jwt
+  evidence: >-
+    Anonymous GET https://core-performance.pixis.ai/ returns 401 with
+    {"error":{"name":"UnauthorizedError","code":"credentials_required",...}}.
+  see: authentication/pixis-authentication.yml
+
+idempotency:
+  supported: false
+  header: null
+  scope: null
+  retention: null
+  evidence: No idempotency header, semantics or documentation on any Pixis surface.
+
+pagination:
+  documented: false
+  style: unknown
+  params: []
+  response_fields: []
+  evidence: No public API reference exists to describe a pagination contract.
+
+field_expansion:
+  supported: unknown
+sparse_fieldsets:
+  supported: unknown
+metadata_fields:
+  supported: unknown
+
+request_tracing:
+  request_id_header: null
+  correlation_id_header: null
+  evidence: >-
+    No X-Request-Id, X-Correlation-Id, Traceparent or equivalent header appears on any observed
+    Pixis response.
+
+versioning:
+  style: unknown
+  evidence: No versioned path, header, or query parameter observable on a public endpoint.
+  see: lifecycle/pixis-lifecycle.yml
+
+error_envelope:
+  media_type: application/json
+  rfc9457: false
+  shape: >-
+    {"error":{"name":<string>,"message":<string>,"code":<string>,"status":<int>,
+    "inner":{"message":<string>}}}
+  evidence: Observed on HTTP 401 from https://core-performance.pixis.ai/.
+  see: errors/pixis-problem-types.yml
+
+success_envelope:
+  shape: '{"success":<bool>,"message":<string>}'
+  evidence: >-
+    Observed on GET https://core-performance.pixis.ai/health -> {"success":true,"message":"Server Running Fine"}
+    and GET https://ws.pixis.ai/ -> {"success":true,"message":"server is running"}. Two
+    independent Pixis services share the envelope, which suggests a house convention rather
+    than a one-off.
+
+rate_limit_signaling:
+  present: false
+  see: rate-limits/pixis-rate-limits.yml
+
+cors:
+  access_control_allow_origin: '*'
+  access_control_expose_headers: Content-Disposition
+  evidence: Present on every response from core-performance.pixis.ai and ws.pixis.ai.
+
+transport:
+  http: HTTP/1.1 observed
+  server_header: 'X-Powered-By: Express'
+  realtime:
+    protocol: Socket.IO / Engine.IO v4
+    endpoint: https://ws.pixis.ai/socket.io/
+    handshake: >-
+      GET /socket.io/?EIO=4&transport=polling returns 200 with
+      {"sid":"...","upgrades":["websocket"],"pingInterval":25000,"pingTimeout":20000,"maxPayload":1000000}
+    documented: false
+    note: >-
+      The handshake is reachable anonymously, but no channel, event name or payload schema is
+      published, so no AsyncAPI can be written without inventing one. None was.
+
+webhooks:
+  documented: false
+  evidence: No webhook, callback or event-subscription documentation on any Pixis surface.

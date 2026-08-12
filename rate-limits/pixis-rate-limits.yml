@@ -1,0 +1,46 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  Live unauthenticated responses from https://core-performance.pixis.ai/ and
+  https://ws.pixis.ai/ ; documentation search across pixis.ai and prism-docs.pixis.ai
+name: Pixis — rate limits
+description: >-
+  No rate limits are documented anywhere on the Pixis public surface, and none of the standard
+  rate-limit response headers appear on any live Pixis response that could be observed
+  anonymously.
+
+limit_count: 0
+documented: false
+docs: null
+
+response_headers_observed:
+  x_ratelimit_family: false
+  ratelimit_family: false
+  retry_after: false
+  exhaustion_status_code: unknown
+  detail: >-
+    Full response headers captured from core-performance.pixis.ai (HTTP 401) and ws.pixis.ai
+    (HTTP 200) contain only Date, Content-Type, Content-Length, Connection, X-Powered-By: Express,
+    Access-Control-Allow-Origin: *, Access-Control-Expose-Headers: Content-Disposition, ETag
+    and Vary. No RateLimit-*, X-RateLimit-* or Retry-After header is present.
+
+evidence:
+  - url: https://core-performance.pixis.ai/
+    status: 401
+    note: No rate-limit headers on the rejection.
+  - url: https://core-performance.pixis.ai/health
+    status: 200
+    note: No rate-limit headers on a successful response.
+  - url: https://ws.pixis.ai/
+    status: 200
+    note: No rate-limit headers.
+  - url: https://prism-docs.pixis.ai/
+    status: 200
+    note: >-
+      77-page end-user product documentation site. No rate-limit, quota or throttling section.
+
+caveat: >-
+  The only endpoints reachable without credentials are health checks and rejections. A limit
+  could be enforced behind authentication and simply not be signalled to anonymous callers.
+  What is measurable is that Pixis publishes no limit and signals no limit, which is what an
+  integrator or an agent would have to work with.

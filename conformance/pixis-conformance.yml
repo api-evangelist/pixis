@@ -1,0 +1,153 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  https://auth.pixis.ai/.well-known/openid-configuration ; https://core-performance.pixis.ai/ ;
+  https://pixis.ai/products/compliance/
+name: Pixis — standards conformance
+description: >-
+  Which industry and cross-cutting standards Pixis demonstrably conforms to, each with the
+  evidence it was judged on. Assertions marked conforms:false are honest absences, not failures
+  to look — every one was probed.
+
+standards:
+
+  - id: oauth2
+    name: OAuth 2.0 (RFC 6749)
+    conforms: true
+    evidence: >-
+      https://auth.pixis.ai/.well-known/oauth-authorization-server returns 200 with a complete
+      authorization-server metadata document (RFC 8414) naming authorization, token, revocation
+      and device-code endpoints.
+
+  - id: oidc
+    name: OpenID Connect Core 1.0
+    conforms: true
+    evidence: >-
+      https://auth.pixis.ai/.well-known/openid-configuration returns 200 with issuer, jwks_uri,
+      userinfo_endpoint, id_token_signing_alg_values_supported and subject_types_supported.
+
+  - id: rfc8414
+    name: OAuth 2.0 Authorization Server Metadata
+    conforms: true
+    evidence: /.well-known/oauth-authorization-server served at auth.pixis.ai, HTTP 200.
+
+  - id: rfc7636
+    name: PKCE (Proof Key for Code Exchange)
+    conforms: true
+    evidence: 'code_challenge_methods_supported: ["S256","plain"] in the discovery document.'
+
+  - id: rfc7517
+    name: JSON Web Key Set
+    conforms: true
+    evidence: >-
+      https://auth.pixis.ai/.well-known/jwks.json returns 200 with two RSA signing keys (RS256).
+
+  - id: rfc9449
+    name: OAuth 2.0 Demonstrating Proof of Possession (DPoP)
+    conforms: partial
+    evidence: >-
+      dpop_signing_alg_values_supported ["ES256"] is advertised by the authorization server.
+      No Pixis-published guidance on using it, and no protected resource documented to use it against.
+
+  - id: rfc7591
+    name: OAuth 2.0 Dynamic Client Registration
+    conforms: partial
+    evidence: >-
+      registration_endpoint https://auth.pixis.ai/oidc/register is advertised. Not exercised —
+      an unauthenticated write was not attempted.
+
+  - id: rfc9728
+    name: OAuth 2.0 Protected Resource Metadata
+    conforms: false
+    evidence: >-
+      /.well-known/oauth-protected-resource returns 404 on auth.pixis.ai and an HTML shell on
+      every other Pixis host. An agent cannot discover which resource server this AS protects.
+
+  - id: rfc9457
+    name: 'Problem Details for HTTP APIs (application/problem+json)'
+    conforms: false
+    evidence: >-
+      The only observable Pixis error envelope — HTTP 401 from https://core-performance.pixis.ai/ —
+      is application/json with an express-jwt shape
+      {"error":{"name","message","code","status","inner"}}, not application/problem+json.
+
+  - id: rfc9116
+    name: security.txt
+    conforms: false
+    evidence: >-
+      /.well-known/security.txt returns 404 on auth.pixis.ai and prism-docs.pixis.ai, and an
+      HTML shell (soft 200) on pixis.ai, app.pixis.ai and prism.pixis.ai.
+
+  - id: openapi
+    name: OpenAPI Specification
+    conforms: false
+    evidence: >-
+      No OpenAPI or Swagger document found. /openapi.json, /openapi.yaml, /swagger.json,
+      /v1/openapi.json, /api-docs, /docs and /redoc probed against pixis.ai, api.pixis.ai,
+      app.pixis.ai, prism.pixis.ai, prism-docs.pixis.ai, integrations.pixis.ai,
+      analytics-core.pixis.ai, core-performance.pixis.ai, sandbox-internal.pixis.ai,
+      ws.pixis.ai, adroom.pixis.ai, visibility.pixis.ai and stellar.pixis.ai. Every result was
+      an HTML application shell, a 401, a 404, or Cloudflare 530/1016.
+
+  - id: asyncapi
+    name: AsyncAPI
+    conforms: false
+    evidence: >-
+      No AsyncAPI document published. A Socket.IO / Engine.IO v4 realtime endpoint is live at
+      https://ws.pixis.ai/socket.io/ (handshake returns 200 with a session id), but no channel,
+      event or payload catalog is published for it, so nothing can be described without inventing it.
+
+  - id: graphql
+    name: GraphQL
+    conforms: false
+    evidence: >-
+      No /graphql surface found. api.pixis.ai/graphql returns Cloudflare 530 (origin DNS error);
+      other hosts return their SPA shell.
+
+  - id: mcp
+    name: Model Context Protocol
+    conforms: false
+    evidence: >-
+      No MCP server published. mcp.pixis.ai resolves to the Cloudflare-proxied wildcard and
+      returns HTTP 530.
+
+  - id: a2a
+    name: A2A Agent Card
+    conforms: false
+    evidence: >-
+      /.well-known/agent-card.json and /.well-known/agent.json probed on every Pixis host.
+      auth.pixis.ai and prism-docs.pixis.ai return 404; the rest return an HTML SPA shell with
+      status 200, which is not an AgentCard.
+
+  - id: soc2
+    name: SOC 2
+    conforms: claimed
+    evidence: >-
+      https://pixis.ai/products/compliance/ states "SOC-2 — We adhere to rigorous security,
+      availability, and confidentiality controls when it comes to handling sensitive data."
+      Marketing claim only; no report, attestation date, auditor or trust portal published.
+
+  - id: iso27001
+    name: ISO/IEC 27001
+    conforms: claimed
+    evidence: >-
+      https://pixis.ai/products/compliance/ states "ISO — Our processes meet internationally
+      recognized security and data management standards." The page does not name the specific
+      ISO standard number, certificate, or certifying body.
+
+  - id: gdpr
+    name: GDPR
+    conforms: claimed
+    evidence: >-
+      https://pixis.ai/products/compliance/ states "Pixis is fully compliant with GDPR
+      regulations." https://pixis.ai/privacy-policy/ is published (HTTP 200).
+
+  - id: idempotency
+    name: Idempotency keys
+    conforms: false
+    evidence: No documented idempotency header or semantics on any Pixis surface.
+
+  - id: pagination
+    name: Documented pagination
+    conforms: false
+    evidence: No published API reference, so no pagination contract exists to conform to.

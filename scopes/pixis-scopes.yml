@@ -1,0 +1,89 @@
+generated: '2026-08-12'
+method: probed
+source: https://auth.pixis.ai/.well-known/openid-configuration
+name: Pixis — OAuth scopes
+description: >-
+  Every scope Pixis's authorization server advertises. Read verbatim from the
+  `scopes_supported` array of the OIDC discovery document at auth.pixis.ai, plus the four
+  scopes the Pixis Prism SPA actually requests.
+
+important: >-
+  These are OpenID Connect identity/profile-claim scopes, not a Pixis resource permission
+  model. Pixis publishes no API scopes — nothing in the form `campaigns:read`,
+  `creatives:write` or similar — because it publishes no developer API. Do not read this file
+  as evidence of a scoped API authorization model; read it as evidence of an OIDC login.
+
+authorization_server: https://auth.pixis.ai/
+docs: null
+docs_note: >-
+  No scopes/permissions reference page exists on any Pixis surface. pixis.ai has no developer
+  section; prism-docs.pixis.ai documents only end-user product features; the Pixis Stoplight
+  workspace (stoplight.io workspace 104607) contains zero public projects.
+
+requested_by_first_party_app:
+  source: https://prism.pixis.ai/assets/index-Bof3QprB.js
+  audience: https://cross-platform-prod.us.auth0.com/api/v2/
+  scopes: [openid, profile, email, offline_access]
+
+scopes:
+  - name: openid
+    kind: oidc
+    description: Request an ID token. Required to use OpenID Connect.
+    requested_by_pixis_app: true
+  - name: profile
+    kind: oidc
+    description: Basic profile claims (name, family_name, given_name, nickname, picture, and similar).
+    requested_by_pixis_app: true
+  - name: email
+    kind: oidc
+    description: The end user's email address.
+    requested_by_pixis_app: true
+  - name: offline_access
+    kind: oidc
+    description: Issue a refresh token so the session can be renewed without re-authentication.
+    requested_by_pixis_app: true
+  - name: name
+    kind: claim
+    description: Full name claim.
+    requested_by_pixis_app: false
+  - name: given_name
+    kind: claim
+    description: Given name claim.
+    requested_by_pixis_app: false
+  - name: family_name
+    kind: claim
+    description: Family name claim.
+    requested_by_pixis_app: false
+  - name: nickname
+    kind: claim
+    description: Nickname claim.
+    requested_by_pixis_app: false
+  - name: email_verified
+    kind: claim
+    description: Whether the email address has been verified.
+    requested_by_pixis_app: false
+  - name: picture
+    kind: claim
+    description: Profile picture URL claim.
+    requested_by_pixis_app: false
+  - name: created_at
+    kind: claim
+    description: Account creation timestamp claim.
+    requested_by_pixis_app: false
+  - name: identities
+    kind: claim
+    description: Linked identity-provider identities claim.
+    requested_by_pixis_app: false
+  - name: phone
+    kind: claim
+    description: Phone number claim.
+    requested_by_pixis_app: false
+  - name: address
+    kind: claim
+    description: Address claim.
+    requested_by_pixis_app: false
+
+summary:
+  scope_count: 14
+  api_resource_scopes: 0
+  oidc_scopes: 14

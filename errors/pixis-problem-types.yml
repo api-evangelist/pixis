@@ -1,0 +1,46 @@
+generated: '2026-08-12'
+method: probed
+source: https://core-performance.pixis.ai/
+name: Pixis — observed error contract
+description: >-
+  Pixis publishes no error reference. This file records the only error envelope that can be
+  observed from outside, captured from a live unauthenticated request to the Pixis application
+  backend. It is a probe record, not a provider-published error catalog, and it is deliberately
+  NOT wired as an ErrorCatalog pointer in apis.yml — one probed status code is not an error
+  contract a provider has published.
+
+format: proprietary-json
+media_type: application/json; charset=utf-8
+rfc9457: false
+envelope: >-
+  {"error":{"name":<string>,"message":<string>,"code":<string>,"status":<int>,
+  "inner":{"message":<string>}}}
+envelope_note: >-
+  This is the default express-jwt / Express error shape, not a designed Pixis error model.
+
+problem_types:
+  - status: 401
+    name: UnauthorizedError
+    code: credentials_required
+    message: No authorization token was found
+    observed_body: >-
+      {"error":{"name":"UnauthorizedError","message":"No authorization token was found",
+      "code":"credentials_required","status":401,"inner":{"message":"No authorization token was found"}}}
+    observed_on: https://core-performance.pixis.ai/
+    observed_at: '2026-08-12'
+    remediation: >-
+      Present an Authorization: Bearer <JWT> header minted by https://auth.pixis.ai/. No public
+      route to obtain such a token exists for a third-party developer.
+    documented_by_provider: false
+
+coverage:
+  problem_type_count: 1
+  documented_count: 0
+  note: >-
+    Only endpoints reachable anonymously could be probed. 4xx/5xx behaviour behind
+    authentication is unobservable and was not guessed at.
+
+gaps:
+  - No published error reference, error code registry, or troubleshooting page.
+  - Errors are not application/problem+json (RFC 9457).
+  - No error documentation in prism-docs.pixis.ai, which covers end-user product behaviour only.

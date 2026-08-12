@@ -1,0 +1,45 @@
+generated: '2026-08-12'
+method: searched
+source: https://pixis.ai/sitemap.xml
+name: Pixis — plans and pricing
+description: >-
+  Pixis publishes no pricing. There is no pricing page, no plan tiers, no quotas, and no
+  machine-readable catalog endpoint. Every route to a price is a demo request form.
+
+plan_count: 0
+currency: null
+billing_periods: []
+free_tier: false
+trial: false
+self_serve_signup: false
+
+evidence:
+  - url: https://pixis.ai/sitemap.xml
+    status: 200
+    note: >-
+      11 section sitemaps, 547 URLs enumerated in full. No /pricing, /plans, /packages or
+      /cost page of any kind.
+  - url: https://pixis.ai/get-a-demo/
+    status: 200
+    note: The published route to commercial terms is a demo request.
+  - url: https://pixis.ai/forms/book-a-demo/
+    status: 200
+  - url: https://pixis.ai/contact/
+    status: 200
+  - url: https://pixis.ai/prismsignup/
+    status: 200
+    note: >-
+      A Prism signup page exists, but it is a lead-capture form; no plan, price or quota is
+      stated on it.
+
+sales_motion: demo-led enterprise
+demo_request_forms:
+  - https://pixis.ai/get-a-demo/
+  - https://pixis.ai/forms/book-a-demo/
+  - https://pixis.ai/forms/prism-landing-page-demo-request/
+  - https://pixis.ai/forms/prism-spanish-demo-request/
+  - https://pixis.ai/forms/prism-portuguese-demo-request/
+
+note: >-
+  plan_count 0 is a measured absence, not an unfinished lookup. Pixis sells through a sales
+  conversation and publishes nothing an integrator or a buyer can price without one.

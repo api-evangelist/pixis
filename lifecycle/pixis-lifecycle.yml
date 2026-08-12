@@ -1,0 +1,106 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  https://status.pixis.ai/ ; https://pixis.ai/sitemap.xml ; https://prism-docs.pixis.ai/ ;
+  https://stoplight.io/api/v1/workspaces/d2s6MTA0NjA3/projects
+name: Pixis — API lifecycle and operational transparency
+description: >-
+  Versioning, deprecation, status and change communication for Pixis. Every field below was
+  probed. The headline finding is that the status page Pixis links from its own domain is
+  password protected, so none of its uptime or incident data is public.
+
+status_page:
+  url: https://status.pixis.ai/
+  http_status: 200
+  platform: UptimeRobot public status page
+  public: false
+  gate: password
+  evidence: >-
+    The page renders a lock icon and the literal text "This status page is password protected."
+    over a password form (input name pspPassword, hidden pspUrl "AlQLmsrVzp"). No monitors,
+    components, uptime percentages or incidents are readable without the password.
+  components_published: 0
+  incident_history: false
+  subscribe: false
+  rss: false
+  note: >-
+    A 200 here is not evidence of a published status page. This artifact exists specifically so
+    the hostname is not mistaken for operational transparency.
+
+versioning:
+  policy_published: false
+  scheme: unknown
+  evidence: >-
+    No versioning policy on any Pixis surface. The pixis.ai sitemap (547 URLs across 11 section
+    sitemaps) contains no developer, API, docs, or changelog page. prism-docs.pixis.ai carries
+    77 end-user product pages and no API or versioning section.
+
+deprecation:
+  policy_published: false
+  sunset_header: unknown
+  deprecation_header: unknown
+  rfc8594: false
+  evidence: >-
+    No deprecation policy published, and no callable public endpoint on which Sunset or
+    Deprecation response headers could be observed.
+
+sla:
+  published: false
+  evidence: >-
+    No SLA, uptime commitment, or support-tier page. Pixis is a demo-led enterprise SaaS; terms
+    are presumably contractual. There is not even a public terms-of-service page in the sitemap.
+
+changelog:
+  published: false
+  url: null
+  evidence: >-
+    No changelog, release-notes or "what's new" page in the pixis.ai sitemap or in the
+    prism-docs.pixis.ai navigation.
+
+developer_portal:
+  published: false
+  evidence:
+    - url: https://api.pixis.ai/
+      status: 530
+      note: >-
+        Cloudflare "error code: 1016" (Origin DNS Error). The api.pixis.ai hostname is
+        provisioned and proxied but has no reachable origin.
+    - url: https://docs.pixis.ai/
+      status: 530
+      note: Same Cloudflare wildcard with no origin.
+    - url: https://developer.pixis.ai/
+      status: 530
+    - url: https://pixis.stoplight.io/
+      status: 200
+      note: >-
+        A Stoplight developer-portal workspace exists (workspace id 104607, slug "pixis",
+        created 2022-08-28) and renders the Pixis brand theme.
+    - url: https://stoplight.io/api/v1/workspaces/d2s6MTA0NjA3/projects
+      status: 200
+      note: >-
+        Returns {"items":[]} — zero public projects. The workspace state embedded in the portal
+        HTML reads "locked": true, "lockAt": "2026-05-08T11:42:03.094+00:00",
+        "lockReason": "overusage", "allowPublicProjects": false. Pixis built an API-docs
+        workspace and it is now locked and empty.
+
+live_service_hosts_note: >-
+  Recorded for operational context only. These are first-party application backends, not
+  documented developer APIs, and none is wired into apis.yml as an API entry.
+
+live_service_hosts_observed:
+  - host: core-performance.pixis.ai
+    status: 401
+    detail: Express + express-jwt. Rejects anonymous callers with credentials_required.
+    health: 'GET /health -> 200 {"success":true,"message":"Server Running Fine"}'
+  - host: ws.pixis.ai
+    status: 200
+    detail: >-
+      Socket.IO / Engine.IO v4 realtime service. GET /socket.io/?EIO=4&transport=polling returns
+      200 with a session id, upgrades ["websocket"], pingInterval 25000, pingTimeout 20000,
+      maxPayload 1000000. No published channel or event catalog.
+  - host: analytics-core.pixis.ai
+    status: 200
+    detail: SPA shell on every path.
+  - host: sandbox-internal.pixis.ai
+    status: 200
+    detail: SPA shell on every path. Name suggests an internal sandbox, not a public one.

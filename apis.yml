@@ -19,8 +19,11 @@ description: 'Pixis is an AI-powered advertising and marketing platform for cons
   Visibility (AI-search presence tracking and optimization). Pixis connects directly to
   marketing and ad platforms such as Google, Meta, and Salesforce to automate media buying,
   creative generation, and performance optimization from one place. The company is backed by
-  SoftBank Vision Fund, with engineering operations in India. Pixis does not publish a public
-  developer API or documentation; it is an enterprise, demo-led SaaS platform.'
+  SoftBank Vision Fund, with engineering operations in India. Pixis is an enterprise, demo-led
+  SaaS platform: it publishes end-user product documentation for Prism at prism-docs.pixis.ai
+  but no public developer API, no OpenAPI or other machine-readable API contract, no SDKs, and
+  no pricing. The one machine-readable document it does serve is an OpenID Connect discovery
+  document at auth.pixis.ai for application login.'
 url: https://raw.githubusercontent.com/api-evangelist/pixis/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -30,7 +33,7 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-20'
+modified: '2026-08-12'
 tags:
 - Company
 - Enterprise
@@ -50,17 +53,63 @@ common:
   url: https://pixis.ai/privacy-policy/
 - type: GitHubOrganization
   url: https://github.com/pixisai
-- type: StatusPage
-  url: https://status.pixis.ai/
+- type: Documentation
+  url: https://prism-docs.pixis.ai/
+- type: Support
+  url: https://pixis.ai/contact/
+- type: SignUp
+  url: https://pixis.ai/prismsignup/
 - type: DomainSecurity
   url: security/pixis-domain-security.yml
+- type: WellKnown
+  url: well-known/pixis-well-known.yml
+- type: Authentication
+  url: authentication/pixis-authentication.yml
+- type: OAuthScopes
+  url: scopes/pixis-scopes.yml
+- type: Conformance
+  url: conformance/pixis-conformance.yml
+- type: Compliance
+  url: security/pixis-trust-center.yml
+- type: Conventions
+  url: conventions/pixis-conventions.yml
+- type: Lifecycle
+  url: lifecycle/pixis-lifecycle.yml
+- type: Plans
+  url: plans/pixis-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/pixis-rate-limits.yml
+- type: LLMsTxt
+  url: llms/pixis-llms.txt
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 x-enrichment:
-  date: '2026-07-20'
-  status: minimal
-  artifacts_added: 1
+  date: '2026-08-12'
+  status: enriched
+  artifacts_added: 15
   pass: local-v1
+x-coverage:
+  state: covered
+  reason: covered
+  detail: >-
+    STEP 0b contract discovery ran to exhaustion across 13 Pixis hosts and found no developer
+    API; the pass is complete and the profile now carries 15 evidence-bearing artifacts,
+    including three provider-served documents saved verbatim from auth.pixis.ai.
+  evidence:
+  - url: https://auth.pixis.ai/.well-known/openid-configuration
+    status: 200
+  - url: https://stoplight.io/api/v1/workspaces/d2s6MTA0NjA3/projects
+    status: 200
+  - url: https://core-performance.pixis.ai/
+    status: 401
+  - url: https://api.pixis.ai/openapi.json
+    status: 530
+  checked: '2026-08-12'
+x-status-page-note: >-
+  The StatusPage pointer to https://status.pixis.ai/ was REMOVED on 2026-08-12. The host
+  returns HTTP 200 but renders "This status page is password protected." over a password form
+  and publishes no components, uptime figures or incident history. A 200 is not evidence of a
+  published status page. See lifecycle/pixis-lifecycle.yml.

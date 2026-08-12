@@ -1,0 +1,215 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  Live unauthenticated HTTP probes of every Pixis-controlled host discovered in STEP 0b
+  contract discovery (DNS enumeration + hosts named inside the Pixis SPA bundles at
+  app.pixis.ai and prism.pixis.ai).
+name: Pixis — /.well-known/ probe
+description: >-
+  Every /.well-known/ path probed across the Pixis host estate. Three real documents were
+  served, all from auth.pixis.ai — the Auth0 custom domain Pixis runs for application login.
+  Every other pixis.ai host answers /.well-known/* with its SPA or WordPress shell (a soft
+  200 carrying HTML, which is a MISS, not a document) or with a 404.
+
+hosts:
+
+  - host: auth.pixis.ai
+    note: >-
+      Auth0 custom domain owned by Pixis (CNAME -> cross-platform-prod-cd-fgeqiir7hsah8pdh.edge.tenants.us.auth0.com).
+      The discovery document self-identifies as "https://auth.pixis.ai/" in `issuer`, and the
+      Pixis Prism SPA configures Auth0Provider with domain "auth.pixis.ai" — so the host and
+      the tenant both belong to Pixis.
+    paths:
+      - path: /.well-known/openid-configuration
+        status: 200
+        content_type: application/json
+        document: true
+        file: pixis-auth-openid-configuration.json
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        content_type: application/json
+        document: true
+        file: pixis-auth-oauth-authorization-server.json
+        note: Byte-identical to the openid-configuration response.
+      - path: /.well-known/jwks.json
+        status: 200
+        content_type: application/json
+        document: true
+        file: pixis-auth-jwks.json
+        note: Two RSA signing keys (RS256). Public key material only.
+      - path: /.well-known/security.txt
+        status: 404
+        document: false
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+        document: false
+      - path: /.well-known/agent-card.json
+        status: 404
+        document: false
+
+  - host: pixis.ai
+    note: >-
+      WordPress marketing site. Returns HTTP 200 with a 1,739-byte HTML 404 shell for every
+      /.well-known/ path and for /llms.txt, /openapi.json and /apis.json. Soft 200, not a document.
+    paths:
+      - path: /.well-known/security.txt
+        status: 200
+        content_type: text/html
+        document: false
+      - path: /.well-known/openid-configuration
+        status: 200
+        content_type: text/html
+        document: false
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        content_type: text/html
+        document: false
+      - path: /.well-known/oauth-protected-resource
+        status: 200
+        content_type: text/html
+        document: false
+      - path: /.well-known/api-catalog
+        status: 200
+        content_type: text/html
+        document: false
+      - path: /.well-known/ai-plugin.json
+        status: 200
+        content_type: text/html
+        document: false
+      - path: /.well-known/agent-card.json
+        status: 200
+        content_type: text/html
+        document: false
+      - path: /.well-known/agent.json
+        status: 200
+        content_type: text/html
+        document: false
+
+  - host: app.pixis.ai
+    note: Firebase-hosted SPA. Same soft-200 HTML shell (2,137 bytes) on every path.
+    paths:
+      - path: /.well-known/security.txt
+        status: 200
+        content_type: text/html
+        document: false
+      - path: /.well-known/openid-configuration
+        status: 200
+        content_type: text/html
+        document: false
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        content_type: text/html
+        document: false
+      - path: /.well-known/api-catalog
+        status: 200
+        content_type: text/html
+        document: false
+      - path: /.well-known/ai-plugin.json
+        status: 200
+        content_type: text/html
+        document: false
+      - path: /.well-known/agent-card.json
+        status: 200
+        content_type: text/html
+        document: false
+      - path: /.well-known/agent.json
+        status: 200
+        content_type: text/html
+        document: false
+
+  - host: prism.pixis.ai
+    note: Firebase-hosted Prism SPA. Same soft-200 HTML shell (5,963 bytes) on every path.
+    paths:
+      - path: /.well-known/security.txt
+        status: 200
+        content_type: text/html
+        document: false
+      - path: /.well-known/openid-configuration
+        status: 200
+        content_type: text/html
+        document: false
+      - path: /.well-known/api-catalog
+        status: 200
+        content_type: text/html
+        document: false
+      - path: /.well-known/ai-plugin.json
+        status: 200
+        content_type: text/html
+        document: false
+      - path: /.well-known/agent-card.json
+        status: 200
+        content_type: text/html
+        document: false
+      - path: /.well-known/agent.json
+        status: 200
+        content_type: text/html
+        document: false
+
+  - host: prism-docs.pixis.ai
+    note: Nextra (Next.js) documentation site for the Prism product. Honest 404s.
+    paths:
+      - path: /.well-known/security.txt
+        status: 404
+        document: false
+      - path: /.well-known/openid-configuration
+        status: 404
+        document: false
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        document: false
+      - path: /.well-known/api-catalog
+        status: 404
+        document: false
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        document: false
+      - path: /.well-known/agent-card.json
+        status: 404
+        document: false
+      - path: /.well-known/agent.json
+        status: 404
+        document: false
+      - path: /llms.txt
+        status: 404
+        document: false
+      - path: /robots.txt
+        status: 404
+        document: false
+      - path: /sitemap.xml
+        status: 404
+        document: false
+
+  - host: integrations.pixis.ai
+    note: >-
+      Firebase-hosted SPA (advance-integrations-production.web.app), discovered inside the
+      Prism module-federation remoteEntry.js. Catch-all 200 HTML on every path.
+    paths:
+      - path: /.well-known/agent-card.json
+        status: 200
+        content_type: text/html
+        document: false
+
+  - host: api.pixis.ai
+    note: >-
+      DNS record exists and is proxied by Cloudflare, but every request returns HTTP 530 with
+      "error code: 1016" — Cloudflare Origin DNS Error. The hostname is reserved but no origin
+      is reachable behind it.
+    paths:
+      - path: /.well-known/security.txt
+        status: 530
+        document: false
+
+summary:
+  hosts_probed: 12
+  paths_probed: 60
+  real_documents: 3
+  documents_host: auth.pixis.ai
+  security_txt: false
+  agent_card: false
+  api_catalog: false
+  ai_plugin: false
+  soft_200_shells: >-
+    pixis.ai, app.pixis.ai, prism.pixis.ai, integrations.pixis.ai, visibility.pixis.ai,
+    adroom.pixis.ai, stellar.pixis.ai, analytics-core.pixis.ai and sandbox-internal.pixis.ai
+    all answer arbitrary paths with 200 + an HTML application shell. Treat any 200 from those
+    hosts as a miss unless the body parses as the expected document type.

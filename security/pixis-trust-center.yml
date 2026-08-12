@@ -1,0 +1,61 @@
+generated: '2026-08-12'
+method: searched
+source: https://pixis.ai/products/compliance/
+name: Pixis — compliance posture
+description: >-
+  Pixis publishes a product page that names three compliance regimes. It is a marketing page,
+  not a trust center: there is no portal, no report request flow, no subprocessor list, no
+  certificate number, no audit period, and no named auditor. Recorded here because the claims
+  are real and provider-published, and because the gap between the claim and the evidence is
+  itself the finding.
+
+trust_center:
+  present: false
+  url: null
+  note: >-
+    No trust.pixis.ai, security.pixis.ai, Vanta/Drata/SafeBase/Conveyor portal, or "request our
+    SOC 2 report" flow found. https://pixis.ai/products/compliance/ (HTTP 200) is the only
+    compliance surface.
+
+certifications:
+  - name: SOC 2
+    status: claimed
+    detail: >-
+      "We adhere to rigorous security, availability, and confidentiality controls when it comes
+      to handling sensitive data."
+    type_stated: false
+    report_available: false
+    auditor: null
+    period: null
+    source: https://pixis.ai/products/compliance/
+  - name: ISO
+    status: claimed
+    detail: >-
+      "Our processes meet internationally recognized security and data management standards,
+      ensuring the highest level of protection."
+    standard_number_stated: false
+    certificate_available: false
+    certifying_body: null
+    source: https://pixis.ai/products/compliance/
+    note: >-
+      The page says only "ISO". It does not say ISO/IEC 27001, 27017, 27018 or 42001, so the
+      specific standard cannot be recorded without guessing.
+
+regulatory:
+  - name: GDPR
+    status: claimed
+    detail: '"Pixis is fully compliant with GDPR regulations, ensuring personal data is handled with transparency, integrity, and user consent."'
+    source: https://pixis.ai/products/compliance/
+  - name: Privacy policy
+    status: published
+    url: https://pixis.ai/privacy-policy/
+    http_status: 200
+
+not_found:
+  - CCPA/CPRA statement
+  - HIPAA
+  - PCI DSS
+  - FedRAMP
+  - Data processing agreement (DPA) at a public URL
+  - Subprocessor list
+  - Terms of service page (no /terms path in the pixis.ai sitemap, 547 URLs enumerated)
