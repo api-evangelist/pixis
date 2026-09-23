@@ -1,0 +1,27 @@
+# Front Door AI Index — pixis — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: pixis
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: pixis.ai
+  final_host: pixis.ai
+  ownership: own
+  owner: pixis
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 19
+  host_score: 19
+  density: 30.35
+  words: 626
+  tiers:
+    agentic: 1
+    core: 18
+    model: 0
+  ambiguous: 1
+  top_terms:
+    AI: 18
+    fine-tune: 1
+    intelligence: 1
